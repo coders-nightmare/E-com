@@ -11,10 +11,10 @@ cart
       <table class="table">
         <tr>
           <th>
-            <h5>Items: <strong>3</strong></h5>
+            <h5>Items: <strong>{{order.get_cart_items}}</strong></h5>
           </th>
           <th>
-            <h5>Items: <strong>$43</strong></h5>
+            <h5>Items: <strong>${{order.get_cart_total}}</strong></h5>
           </th>
           <th>
             <a style="float: right; margin: 5px;" href="{%url 'checkout'%}" class="btn btn-success">Checkout</a>
@@ -31,19 +31,21 @@ cart
         <div style="flex: 1;"><strong>Quantity</strong></div>
         <div style="flex: 1;"><strong>Total</strong></div>
       </div>
+      {% for item in items %}
       <div class="cart-row">
-        <div style="flex: 2;"><img class="row-image" src="{%static 'images/phone.jpg'%}" alt=""></div>
-        <div style="flex: 2;">Product 1</div>
-        <div style="flex: 1;">$20</div>
+        <div style="flex: 2;"><img class="row-image" src="{{item.product.imageURL}}" alt=""></div>
+        <div style="flex: 2;">{{item.product.name}}</div>
+        <div style="flex: 1;">{{item.product.price|floatformat:2}}</div>
         <div style="flex: 1;">
-          <p class="quantity">2</p>
+          <p class="quantity">{{item.quantity}}</p>
           <div class="quantity">
             <i style="margin-top: 0px;" class="fas fa-caret-up chg-quantity"></i>
             <i style="margin-top: 0px;" class="fas fa-caret-down chg-quantity"></i>
           </div>
         </div>
-        <div style="flex: 1;">$40</div>
+        <div style="flex: 1;">${{item.get_total|floatformat:2}}</div>
       </div>
+      {% endfor %}
     </div>
   </div>
 </div>
